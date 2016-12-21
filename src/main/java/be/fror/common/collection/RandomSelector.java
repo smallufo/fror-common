@@ -81,6 +81,12 @@ public final class RandomSelector<T> {
 
     return new RandomSelector<>(els, r -> r.nextInt(size));
   }
+  
+  public static <T> RandomSelector fromCountMap(Map<T , Integer> map) {
+    int sum = map.values().stream().mapToInt(Integer::intValue).sum();
+    return weighted(map.keySet() , value -> map.get(value) / (double)sum );
+  }
+
 
   /**
    * Creates a random selector among <tt>elements</tt> where the elements have a weight defined by
